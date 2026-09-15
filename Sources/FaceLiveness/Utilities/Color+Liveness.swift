@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 extension Color {
     static let livenessPrimaryBackground = Color.dynamicColors(
@@ -52,4 +53,14 @@ extension Color {
         light: .hex("#AEB3B7"), 
         dark: .white
     )
+}
+
+// KTalk fork: brand accent used by the capture screen. Upstream has no theming hook,
+// so the fork carries the value.
+extension UIColor {
+    static let ktalkAccent = UIColor(red: 1.0, green: 122.0 / 255.0, blue: 89.0 / 255.0, alpha: 1)
+}
+
+extension Color {
+    static let ktalkAccent = Color(UIColor.ktalkAccent)
 }

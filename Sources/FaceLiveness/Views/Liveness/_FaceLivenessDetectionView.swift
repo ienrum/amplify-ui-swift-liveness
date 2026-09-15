@@ -26,8 +26,11 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
     }
 
     var body: some View {
+        // KTalk fork: capture screen publishing. The preview, oval overlay, freshness
+        // area and screen brightness behaviour are untouched — only the surrounding
+        // chrome (background, header, cancel affordance) is KTalk's.
         ZStack {
-            Color.black
+            Color.livenessBackground
             ZStack {
                 videoView
                 VStack {
@@ -38,10 +41,6 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
                         }
 
                         Spacer()
-
-                        CloseButton(
-                            action: viewModel.closeButtonAction
-                        )
                     }
                     .padding()
 
@@ -55,6 +54,37 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
                 .aspectRatio(3/4, contentMode: .fit)
                 .frame(maxWidth: .infinity)
             }
+
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_title"))
+                        .font(.title2.bold())
+                        .foregroundColor(.livenessLabel)
+                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_description"))
+                        .font(.subheadline)
+                        .foregroundColor(.livenessLabel)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Spacer()
+
+                Text(LocalizedStringKey("amplify_ui_liveness_challenge_hint"))
+                    .font(.subheadline)
+                    .foregroundColor(.livenessLabel)
+                    .padding(.bottom, 16)
+
+                Button(action: viewModel.closeButtonAction) {
+                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_cancel"))
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, minHeight: 56)
+                        .background(Color.ktalkAccent)
+                        .cornerRadius(8)
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 56)
+            .padding(.bottom, 32)
         }
         .edgesIgnoringSafeArea(.all)
     }
