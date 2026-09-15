@@ -25,6 +25,8 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/Base.lproj"),
+                // KTalk fork: Pretendard for the capture screen chrome.
+                .process("Resources/Fonts"),
                 .copy("Resources/face_detection_short_range.mlmodelc")
             ]
         ),

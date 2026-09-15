@@ -56,35 +56,35 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
             }
 
             VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_title"))
-                        .font(.title2.bold())
-                        .foregroundColor(.livenessLabel)
-                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_description"))
-                        .font(.subheadline)
-                        .foregroundColor(.livenessLabel)
+                VStack(alignment: .leading, spacing: KTalkCaptureStyle.titleToDescription) {
+                    Text("amplify_ui_liveness_challenge_title".localized())
+                        .font(KTalkCaptureStyle.title)
+                        .foregroundColor(KTalkCaptureStyle.titleColor)
+                    Text("amplify_ui_liveness_challenge_description".localized())
+                        .font(KTalkCaptureStyle.description)
+                        .foregroundColor(KTalkCaptureStyle.descriptionColor)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
-                Text(LocalizedStringKey("amplify_ui_liveness_challenge_hint"))
-                    .font(.subheadline)
-                    .foregroundColor(.livenessLabel)
-                    .padding(.bottom, 16)
+                Text("amplify_ui_liveness_challenge_hint".localized())
+                    .font(KTalkCaptureStyle.hint)
+                    .foregroundColor(KTalkCaptureStyle.descriptionColor)
+                    .padding(.bottom, KTalkCaptureStyle.hintToButton)
 
                 Button(action: viewModel.closeButtonAction) {
-                    Text(LocalizedStringKey("amplify_ui_liveness_challenge_cancel"))
-                        .font(.headline)
+                    Text("amplify_ui_liveness_challenge_cancel".localized())
+                        .font(KTalkCaptureStyle.buttonLabel)
                         .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, minHeight: 56)
-                        .background(Color.ktalkAccent)
-                        .cornerRadius(8)
+                        .frame(maxWidth: .infinity, minHeight: KTalkCaptureStyle.buttonHeight)
+                        .background(FaceLivenessAppearance.accent)
+                        .cornerRadius(KTalkCaptureStyle.buttonCorner)
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 56)
-            .padding(.bottom, 32)
+            .padding(.horizontal, KTalkCaptureStyle.sideMargin)
+            .padding(.top, KTalkCaptureStyle.titleTopFromNavBar)
+            .padding(.bottom, KTalkCaptureStyle.buttonBottomMargin)
         }
         .edgesIgnoringSafeArea(.all)
     }

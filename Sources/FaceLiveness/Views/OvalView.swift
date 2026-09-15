@@ -28,7 +28,7 @@ class OvalView: UIView {
         UIColor.clear.setFill()
         // KTalk fork: stroke color only. `ovalFrame` comes from the caller, so the
         // oval geometry stays exactly as upstream sized it — face fit feeds the score.
-        UIColor.ktalkAccent.setStroke()
+        FaceLivenessAppearance.accentUIColor.setStroke()
         oval.lineWidth = 8
         oval.stroke()
     }
