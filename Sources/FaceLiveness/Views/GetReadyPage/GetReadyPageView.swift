@@ -43,23 +43,47 @@ struct GetReadyPageView: View {
                         .multilineTextAlignment(.center)
                     Spacer()
                 }.padding()
+
+                // KTalk fork: 준비 화면의 제목·설명. 광과민성 고지와 SDK 안내는
+                // 그대로 둔다 — 고지를 가리거나 대체하지 않는다.
+                VStack(alignment: .leading, spacing: KTalkCaptureStyle.titleToDescription) {
+                    Text("amplify_ui_liveness_challenge_title".localized())
+                        .font(KTalkCaptureStyle.title)
+                        .foregroundColor(KTalkCaptureStyle.titleColor)
+                    Text("amplify_ui_liveness_challenge_description".localized())
+                        .font(KTalkCaptureStyle.description)
+                        .foregroundColor(KTalkCaptureStyle.descriptionColor)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, KTalkCaptureStyle.sideMargin)
+                .padding(.top, KTalkCaptureStyle.titleTopFromNavBar)
             }
             beginCheckButton
         }
     }
 
+    // KTalk fork: 보조 문구와 시작 버튼. 동작은 그대로 onBegin 이다.
     private var beginCheckButton: some View {
-        Button(
-            action: onBegin,
-            label: {
-                Text(LocalizedStrings.get_ready_begin_check)
-                    .foregroundColor(.livenessPrimaryLabel)
-                    .frame(maxWidth: .infinity)
-            }
-        )
-        .disabled(beginCheckButtonDisabled)
-        .frame(height: 52)
-        ._background { Color.livenessPrimaryBackground }
+        VStack(alignment: .leading, spacing: KTalkCaptureStyle.hintToButton) {
+            Text("amplify_ui_liveness_challenge_hint".localized())
+                .font(KTalkCaptureStyle.hint)
+                .foregroundColor(KTalkCaptureStyle.descriptionColor)
+            Button(
+                action: onBegin,
+                label: {
+                    Text(LocalizedStrings.get_ready_begin_check)
+                        .font(KTalkCaptureStyle.buttonLabel)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, minHeight: KTalkCaptureStyle.buttonHeight)
+                        .background(FaceLivenessAppearance.accent)
+                        .cornerRadius(KTalkCaptureStyle.buttonCorner)
+                }
+            )
+            .disabled(beginCheckButtonDisabled)
+        }
+        .padding(.horizontal, KTalkCaptureStyle.sideMargin)
+        .padding(.bottom, KTalkCaptureStyle.buttonBottomMargin)
         .cornerRadius(14)
         .padding([.leading, .trailing])
         .padding(.bottom, 16)

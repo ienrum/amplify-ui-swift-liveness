@@ -26,11 +26,8 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
     }
 
     var body: some View {
-        // KTalk fork: capture screen publishing. The preview, oval overlay, freshness
-        // area and screen brightness behaviour are untouched — only the surrounding
-        // chrome (background, header, cancel affordance) is KTalk's.
         ZStack {
-            Color.livenessBackground
+            Color.black
             ZStack {
                 videoView
                 VStack {
@@ -41,6 +38,10 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
                         }
 
                         Spacer()
+
+                        CloseButton(
+                            action: viewModel.closeButtonAction
+                        )
                     }
                     .padding()
 
@@ -54,37 +55,6 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
                 .aspectRatio(3/4, contentMode: .fit)
                 .frame(maxWidth: .infinity)
             }
-
-            VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: KTalkCaptureStyle.titleToDescription) {
-                    Text("amplify_ui_liveness_challenge_title".localized())
-                        .font(KTalkCaptureStyle.title)
-                        .foregroundColor(KTalkCaptureStyle.titleColor)
-                    Text("amplify_ui_liveness_challenge_description".localized())
-                        .font(KTalkCaptureStyle.description)
-                        .foregroundColor(KTalkCaptureStyle.descriptionColor)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                Spacer()
-
-                Text("amplify_ui_liveness_challenge_hint".localized())
-                    .font(KTalkCaptureStyle.hint)
-                    .foregroundColor(KTalkCaptureStyle.descriptionColor)
-                    .padding(.bottom, KTalkCaptureStyle.hintToButton)
-
-                Button(action: viewModel.closeButtonAction) {
-                    Text("amplify_ui_liveness_challenge_cancel".localized())
-                        .font(KTalkCaptureStyle.buttonLabel)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, minHeight: KTalkCaptureStyle.buttonHeight)
-                        .background(FaceLivenessAppearance.accent)
-                        .cornerRadius(KTalkCaptureStyle.buttonCorner)
-                }
-            }
-            .padding(.horizontal, KTalkCaptureStyle.sideMargin)
-            .padding(.top, KTalkCaptureStyle.titleTopFromNavBar)
-            .padding(.bottom, KTalkCaptureStyle.buttonBottomMargin)
         }
         .edgesIgnoringSafeArea(.all)
     }
