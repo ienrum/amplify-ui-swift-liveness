@@ -33,7 +33,7 @@ struct CameraPreviewView: View {
                     })
             GeometryReader { geometry in
                 Ellipse()
-                    .stroke(Color.livenessPreviewBorder, style: StrokeStyle(lineWidth: 3))
+                    .stroke(FaceLivenessAppearance.accent, style: StrokeStyle(lineWidth: 3))
                     .frame(width: geometry.size.width*Self.previewWidthRatio,
                            height: geometry.size.height*Self.previewHeightRatio)
                     .position(x: geometry.size.width*Self.previewXPositionRatio,

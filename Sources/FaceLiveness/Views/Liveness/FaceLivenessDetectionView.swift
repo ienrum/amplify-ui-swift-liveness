@@ -215,7 +215,6 @@ public struct FaceLivenessDetectorView: View {
                     displayState = .displayingLiveness
                 },
                 beginCheckButtonDisabled: false,
-                challenge: challenge,
                 cameraPosition: cameraPosition
             )
             .onAppear {
