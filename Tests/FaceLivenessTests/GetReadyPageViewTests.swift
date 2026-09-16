@@ -23,7 +23,8 @@ final class GetReadyPageViewTests: XCTestCase {
         defer { FaceLivenessAppearance.accentARGB = previousAccent }
         let view = GetReadyPageView(
             onBegin: {},
-            cameraPosition: .front
+            cameraPosition: .front,
+            onBack: {}
         )
         .environment(\.colorScheme, .dark)
         let renderer = ImageRenderer(content: view.frame(width: size.width, height: size.height))

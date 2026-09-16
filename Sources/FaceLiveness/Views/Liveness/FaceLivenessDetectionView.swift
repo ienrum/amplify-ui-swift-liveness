@@ -215,7 +215,17 @@ public struct FaceLivenessDetectorView: View {
                     displayState = .displayingLiveness
                 },
                 beginCheckButtonDisabled: false,
-                cameraPosition: cameraPosition
+                cameraPosition: cameraPosition,
+                // 촬영 중 닫기 버튼과 같은 취소 경로다. 소켓을 사용자 취소 코드로
+                // 닫고 종료 사유를 그대로 호출부에 돌려준다.
+                onBack: {
+                    let cancelled = LivenessStateMachine.LivenessError.userCancelled
+                    viewModel.livenessService?.closeSocket(
+                        with: cancelled.webSocketCloseCode ?? .normalClosure
+                    )
+                    isPresented = false
+                    onCompletion(.failure(.userCancelled))
+                }
             )
             .onAppear {
                 setBrightnessToMax()
