@@ -26,36 +26,32 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
     }
 
     var body: some View {
+        ZStack(alignment: .topLeading) {
+            captureContent.edgesIgnoringSafeArea(.all)
+            KTalkBackButton(action: viewModel.closeButtonAction)
+        }
+    }
+
+    private var captureContent: some View {
         ZStack {
             Color.black
             ZStack {
                 videoView
                 VStack {
-                    HStack(alignment: .top) {
-                        if viewModel.livenessState.shouldDisplayRecordingIcon {
-                            RecordingButton()
-                                .accessibilityHidden(true)
-                        }
-
-                        Spacer()
-
-                        CloseButton(
-                            action: viewModel.closeButtonAction
-                        )
-                    }
-                    .padding()
+                    // Preserve the instruction position independently of the navigation control.
+                    Color.clear.frame(height: KTalkCaptureStyle.navBarHeight)
+                    .padding(.top, 16)
 
                     InstructionContainerView(
                         viewModel: viewModel
                     )
+                    .padding(.horizontal, KTalkCaptureStyle.sideMargin)
 
                     Spacer()
                 }
-                .padding([.leading, .trailing])
                 .aspectRatio(3/4, contentMode: .fit)
                 .frame(maxWidth: .infinity)
             }
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }

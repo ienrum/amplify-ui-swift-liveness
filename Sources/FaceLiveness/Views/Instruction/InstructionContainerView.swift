@@ -17,9 +17,9 @@ struct InstructionContainerView: View {
         case .displayingFreshness:
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_hold_still,
-                backgroundColor: .livenessPrimaryBackground,
-                textColor: .livenessPrimaryLabel,
-                font: .title
+                backgroundColor: .white,
+                textColor: KTalkCaptureStyle.titleColor,
+                font: KTalkCaptureStyle.instruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -31,9 +31,9 @@ struct InstructionContainerView: View {
         case .awaitingFaceInOvalMatch(.faceTooClose, _):
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_move_face_back,
-                backgroundColor: .livenessErrorBackground,
-                textColor: .livenessErrorLabel,
-                font: .title
+                backgroundColor: .white,
+                textColor: KTalkCaptureStyle.errorColor,
+                font: KTalkCaptureStyle.instruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -45,25 +45,25 @@ struct InstructionContainerView: View {
         case .awaitingFaceInOvalMatch(let reason, let percentage):
             InstructionView(
                 text: .init(reason.localizedValue),
-                backgroundColor: .livenessPrimaryBackground,
-                textColor: .livenessPrimaryLabel,
-                font: .title
+                backgroundColor: .white,
+                textColor: KTalkCaptureStyle.titleColor,
+                font: KTalkCaptureStyle.instruction
             )
 
             ProgressBarView(
                 emptyColor: .white,
                 borderColor: .hex("#AEB3B7"),
-                fillColor: .livenessPrimaryBackground,
-                indicatorColor: .livenessPrimaryBackground,
+                fillColor: FaceLivenessAppearance.accent,
+                indicatorColor: FaceLivenessAppearance.accent,
                 percentage: percentage
             )
             .frame(width: 200, height: 30)
         case .recording(ovalDisplayed: true):
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_move_face_closer,
-                backgroundColor: .livenessPrimaryBackground,
-                textColor: .livenessPrimaryLabel,
-                font: .title
+                backgroundColor: .white,
+                textColor: KTalkCaptureStyle.titleColor,
+                font: KTalkCaptureStyle.instruction
             )
             .onAppear {
                 UIAccessibility.post(
@@ -75,22 +75,22 @@ struct InstructionContainerView: View {
             ProgressBarView(
                 emptyColor: .white,
                 borderColor: .hex("#AEB3B7"),
-                fillColor: .livenessPrimaryBackground,
-                indicatorColor: .livenessPrimaryBackground,
+                fillColor: FaceLivenessAppearance.accent,
+                indicatorColor: FaceLivenessAppearance.accent,
                 percentage: 0.2
             )
             .frame(width: 200, height: 30)
         case .pendingFacePreparedConfirmation(let reason):
             InstructionView(
                 text: .init(reason.localizedValue),
-                backgroundColor: .livenessPrimaryBackground,
-                textColor: .livenessPrimaryLabel,
-                font: .title
+                backgroundColor: .white,
+                textColor: KTalkCaptureStyle.titleColor,
+                font: KTalkCaptureStyle.instruction
             )
         case .completedDisplayingFreshness:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .livenessBackground
+                backgroundColor: .white
             )
             .onAppear {
                 UIAccessibility.post(
@@ -101,7 +101,7 @@ struct InstructionContainerView: View {
         case .completedNoLightCheck:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .livenessBackground
+                backgroundColor: .white
             )
             .onAppear {
                 UIAccessibility.post(
@@ -114,9 +114,9 @@ struct InstructionContainerView: View {
                case .faceMovementAndLightChallenge = challenge {
                 InstructionView(
                     text: LocalizedStrings.challenge_instruction_hold_still,
-                    backgroundColor: .livenessPrimaryBackground,
-                    textColor: .livenessPrimaryLabel,
-                    font: .title
+                    backgroundColor: .white,
+                    textColor: KTalkCaptureStyle.titleColor,
+                    font: KTalkCaptureStyle.instruction
                 )
             } else {
                 EmptyView()

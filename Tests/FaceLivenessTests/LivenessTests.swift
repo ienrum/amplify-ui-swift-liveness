@@ -1,5 +1,7 @@
 import XCTest
 import Combine
+import SwiftUI
+import Vision
 @testable import FaceLiveness
 @_spi(PredictionsFaceLiveness) import AWSPredictionsPlugin
 
@@ -246,39 +248,45 @@ final class FaceLivenessDetectionViewModelTestCase: XCTestCase {
         XCTAssertEqual(viewModel.livenessState.state, .encounteredUnrecoverableError(.timedOut))
     }
 
-    /// Given:  A `FaceLivenessDetectionViewModel` in a non-capturing state
-    /// When: `shouldDisplayRecordingIcon` is read
-    /// Then: The REC indicator is only shown while actively capturing (oval displayed through freshness)
-    func testShouldDisplayRecordingIcon() {
-        let capturing: [LivenessStateMachine.State] = [
-            .recording(ovalDisplayed: true),
-            .awaitingFaceInOvalMatch(.moveFaceCloser, 0.5),
-            .faceMatched,
-            .displayingFreshness
+    func testCaptureInstructionsWithoutRECAndBackCancellation() async throws {
+        guard #available(iOS 16.0, *) else { throw XCTSkip("ImageRenderer requires iOS 16") }
+        let cases: [(LivenessStateMachine.State, String)] = [
+            (.displayingFreshness, "Hold still"),
+            (.awaitingFaceInOvalMatch(.faceTooClose, 0), "Move back"),
+            (.completedNoLightCheck, "Verifying")
         ]
-        for state in capturing {
-            XCTAssertTrue(
-                LivenessStateMachine(state: state).shouldDisplayRecordingIcon,
-                "Expected REC indicator to show for \(state)"
-            )
+        for (state, expectedText) in cases {
+            viewModel.livenessState = .init(state: state)
+            let content = _FaceLivenessDetectionView(viewModel: viewModel) { Color.white }
+                .environment(\.colorScheme, .dark)
+                .environment(\.dynamicTypeSize, .xxxLarge)
+                .frame(width: 375, height: 667)
+            let renderer = ImageRenderer(content: content)
+            renderer.scale = 2
+            let image = try XCTUnwrap(renderer.uiImage)
+            let attachment = XCTAttachment(image: image)
+            attachment.name = "capture-\(expectedText)-large-text"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            let request = VNRecognizeTextRequest()
+            request.recognitionLevel = .accurate
+            request.recognitionLanguages = ["en-US"]
+            try VNImageRequestHandler(cgImage: XCTUnwrap(image.cgImage)).perform([request])
+            let text = (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }
+                .joined(separator: " ")
+            XCTAssertTrue(text.contains(expectedText), text)
+            XCTAssertFalse(text.contains("REC"), text)
         }
 
-        let notCapturing: [LivenessStateMachine.State] = [
-            .initial,
-            .pendingFacePreparedConfirmation(.pendingCheck),
-            .waitForRecording,
-            .recording(ovalDisplayed: false),
-            .completedDisplayingFreshness,
-            .completedNoLightCheck,
-            .completed,
-            .encounteredUnrecoverableError(.timedOut)
-        ]
-        for state in notCapturing {
-            XCTAssertFalse(
-                LivenessStateMachine(state: state).shouldDisplayRecordingIcon,
-                "Expected REC indicator to be hidden for \(state)"
-            )
+        let cancelled = expectation(description: "Back keeps SDK user cancellation")
+        let subscription = viewModel.$livenessState.sink { state in
+            if state.state == .encounteredUnrecoverableError(.userCancelled) {
+                cancelled.fulfill()
+            }
         }
+        defer { subscription.cancel() }
+        KTalkBackButton(action: viewModel.closeButtonAction).action()
+        await fulfillment(of: [cancelled], timeout: 2)
     }
 
     /// Given:  The public `FaceLivenessDetectionError` values

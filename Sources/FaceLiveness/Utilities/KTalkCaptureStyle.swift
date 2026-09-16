@@ -17,6 +17,8 @@ enum KTalkCaptureStyle {
     // app: CommonColors.gray1E / gray73
     static let titleColor = Color(UIColor(red: 0x1E / 255, green: 0x1E / 255, blue: 0x1E / 255, alpha: 1))
     static let descriptionColor = Color(UIColor(red: 0x73 / 255, green: 0x73 / 255, blue: 0x73 / 255, alpha: 1))
+    // app: CommonColors.redC8, readable against the white instruction surface.
+    static let errorColor = Color(UIColor(red: 0xC8 / 255, green: 0x46 / 255, blue: 0x46 / 255, alpha: 1))
 
     // app: the back chevron stroke in assets/icons/arrow/24-chevron-left.svg
     static let backIconColor = Color(UIColor(red: 0x4E / 255, green: 0x4E / 255, blue: 0x4E / 255, alpha: 1))
@@ -42,6 +44,7 @@ enum KTalkCaptureStyle {
     static var description: Font { pretendard(size: 14, bold: false) }
     static var hint: Font { description }
     static var buttonLabel: Font { pretendard(size: 16, bold: true) }
+    static var instruction: Font { pretendard(size: 16, bold: true) }
 
     /// Registers the packaged font once; falls back to the system font if that fails
     /// so a font problem never blocks the capture.
