@@ -57,3 +57,8 @@
 "amplify_ui_liveness_challenge_hint" = "Look at the camera so your face is clearly visible.";
 "amplify_ui_liveness_challenge_cancel" = "Cancel";
 "amplify_ui_liveness_challenge_a11y_back_content_description" = "Back";
+
+/* KTalk fork: 촬영 중 화면의 보조 문구(DSN-APP-IDT-0007-06). */
+"amplify_ui_liveness_challenge_capture_hint" = "Take off your hat and mask.";
+"amplify_ui_liveness_challenge_capture_hint_progress" = "Almost there. Keep moving slowly.";
+"amplify_ui_liveness_challenge_capture_hint_light" = "The screen will change color a few times.";

@@ -22,12 +22,13 @@ class OvalView: UIView {
         let oval = UIBezierPath(ovalIn: ovalFrame)
         mask.append(oval.reversing())
 
-        UIColor.white.withAlphaComponent(0.9).setFill()
+        // KTalk fork: 도면의 「어둡게 덮기」. 타원 좌표와 크기는 SDK 값 그대로다.
+        KTalkCaptureStyle.captureScrim.setFill()
         mask.fill()
 
         UIColor.clear.setFill()
-        UIColor.white.setStroke()
-        oval.lineWidth = 8
+        KTalkCaptureStyle.captureOvalStroke.setStroke()
+        oval.lineWidth = KTalkCaptureStyle.captureOvalStrokeWidth
         oval.stroke()
     }
 

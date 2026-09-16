@@ -45,7 +45,8 @@ final class _LivenessViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        // 도면의 촬영 화면은 어두운 배경이다(DSN-APP-IDT-0007-06).
+        view.backgroundColor = KTalkCaptureStyle.captureBackground
         layoutSubviews()
         setupAVLayer()
     }

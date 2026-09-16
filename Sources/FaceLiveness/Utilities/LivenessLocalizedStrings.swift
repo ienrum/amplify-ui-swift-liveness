@@ -59,6 +59,16 @@ enum LocalizedStrings {
     /// en = "Cancel Challenge"
     static let challenge_cancel_a11y = "amplify_ui_liveness_challenge_cancel_a11y".localized()
 
+    // KTalk fork: 촬영 중 화면의 보조 문구(DSN-APP-IDT-0007-06).
+    /// en = "Take off your hat and mask."
+    static let challenge_capture_hint = "amplify_ui_liveness_challenge_capture_hint".localized()
+
+    /// en = "Almost there. Keep moving slowly."
+    static let challenge_capture_hint_progress = "amplify_ui_liveness_challenge_capture_hint_progress".localized()
+
+    /// en = "The screen will change color a few times."
+    static let challenge_capture_hint_light = "amplify_ui_liveness_challenge_capture_hint_light".localized()
+
     /// en = "Change Your Camera Settings"
     static let camera_setting_alert_title = "amplify_ui_liveness_camera_setting_alert_title".localized()
 

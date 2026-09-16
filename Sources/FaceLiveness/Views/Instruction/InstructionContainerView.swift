@@ -17,9 +17,7 @@ struct InstructionContainerView: View {
         case .displayingFreshness:
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_hold_still,
-                backgroundColor: .white,
-                textColor: KTalkCaptureStyle.titleColor,
-                font: KTalkCaptureStyle.instruction
+                backgroundColor: KTalkCaptureStyle.captureBubble
             )
             .onAppear {
                 UIAccessibility.post(
@@ -31,9 +29,7 @@ struct InstructionContainerView: View {
         case .awaitingFaceInOvalMatch(.faceTooClose, _):
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_move_face_back,
-                backgroundColor: .white,
-                textColor: KTalkCaptureStyle.errorColor,
-                font: KTalkCaptureStyle.instruction
+                backgroundColor: KTalkCaptureStyle.errorColor
             )
             .onAppear {
                 UIAccessibility.post(
@@ -42,28 +38,17 @@ struct InstructionContainerView: View {
                 )
             }
 
-        case .awaitingFaceInOvalMatch(let reason, let percentage):
+        // 사용자가 움직여야 하는 안내는 도면의 강조색을 쓴다. 진행 표시는 타원
+        // 테두리가 맡는다(KTalkOvalProgress).
+        case .awaitingFaceInOvalMatch(let reason, _):
             InstructionView(
                 text: .init(reason.localizedValue),
-                backgroundColor: .white,
-                textColor: KTalkCaptureStyle.titleColor,
-                font: KTalkCaptureStyle.instruction
+                backgroundColor: FaceLivenessAppearance.accent
             )
-
-            ProgressBarView(
-                emptyColor: .white,
-                borderColor: .hex("#AEB3B7"),
-                fillColor: FaceLivenessAppearance.accent,
-                indicatorColor: FaceLivenessAppearance.accent,
-                percentage: percentage
-            )
-            .frame(width: 200, height: 30)
         case .recording(ovalDisplayed: true):
             InstructionView(
                 text: LocalizedStrings.challenge_instruction_move_face_closer,
-                backgroundColor: .white,
-                textColor: KTalkCaptureStyle.titleColor,
-                font: KTalkCaptureStyle.instruction
+                backgroundColor: FaceLivenessAppearance.accent
             )
             .onAppear {
                 UIAccessibility.post(
@@ -71,26 +56,15 @@ struct InstructionContainerView: View {
                     argument: LocalizedStrings.challenge_instruction_move_face_closer
                 )
             }
-
-            ProgressBarView(
-                emptyColor: .white,
-                borderColor: .hex("#AEB3B7"),
-                fillColor: FaceLivenessAppearance.accent,
-                indicatorColor: FaceLivenessAppearance.accent,
-                percentage: 0.2
-            )
-            .frame(width: 200, height: 30)
         case .pendingFacePreparedConfirmation(let reason):
             InstructionView(
                 text: .init(reason.localizedValue),
-                backgroundColor: .white,
-                textColor: KTalkCaptureStyle.titleColor,
-                font: KTalkCaptureStyle.instruction
+                backgroundColor: KTalkCaptureStyle.captureBubble
             )
         case .completedDisplayingFreshness:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .white
+                backgroundColor: KTalkCaptureStyle.captureBubble
             )
             .onAppear {
                 UIAccessibility.post(
@@ -101,7 +75,7 @@ struct InstructionContainerView: View {
         case .completedNoLightCheck:
             InstructionView(
                 text: LocalizedStrings.challenge_verifying,
-                backgroundColor: .white
+                backgroundColor: KTalkCaptureStyle.captureBubble
             )
             .onAppear {
                 UIAccessibility.post(
@@ -114,9 +88,7 @@ struct InstructionContainerView: View {
                case .faceMovementAndLightChallenge = challenge {
                 InstructionView(
                     text: LocalizedStrings.challenge_instruction_hold_still,
-                    backgroundColor: .white,
-                    textColor: KTalkCaptureStyle.titleColor,
-                    font: KTalkCaptureStyle.instruction
+                    backgroundColor: KTalkCaptureStyle.captureBubble
                 )
             } else {
                 EmptyView()
