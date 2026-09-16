@@ -257,7 +257,9 @@ final class FaceLivenessDetectionViewModelTestCase: XCTestCase {
         ]
         for (state, expectedText) in cases {
             viewModel.livenessState = .init(state: state)
-            let content = _FaceLivenessDetectionView(viewModel: viewModel) { Color.white }
+            let content = _FaceLivenessDetectionView(viewModel: viewModel) {
+                Color.gray.aspectRatio(3/4, contentMode: .fit)
+            }
                 .environment(\.colorScheme, .dark)
                 .environment(\.dynamicTypeSize, .xxxLarge)
                 .frame(width: 375, height: 667)
@@ -268,6 +270,18 @@ final class FaceLivenessDetectionViewModelTestCase: XCTestCase {
             attachment.name = "capture-\(expectedText)-large-text"
             attachment.lifetime = .keepAlways
             add(attachment)
+            let cgImage = try XCTUnwrap(image.cgImage)
+            var pixel = [UInt8](repeating: 0, count: 4)
+            let context = try XCTUnwrap(CGContext(
+                data: &pixel, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4,
+                space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            ))
+            let corner = try XCTUnwrap(cgImage.cropping(to: CGRect(
+                x: cgImage.width - 2, y: 2, width: 1, height: 1
+            )))
+            context.draw(corner, in: CGRect(x: 0, y: 0, width: 1, height: 1))
+            XCTAssertEqual(Array(pixel.prefix(3)), [255, 255, 255])
             let request = VNRecognizeTextRequest()
             request.recognitionLevel = .accurate
             request.recognitionLanguages = ["en-US"]

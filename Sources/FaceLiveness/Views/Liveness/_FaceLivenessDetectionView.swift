@@ -34,7 +34,7 @@ struct _FaceLivenessDetectionView<VideoView: View>: View {
 
     private var captureContent: some View {
         ZStack {
-            Color.black
+            Color.white
             ZStack {
                 videoView
                 VStack {
