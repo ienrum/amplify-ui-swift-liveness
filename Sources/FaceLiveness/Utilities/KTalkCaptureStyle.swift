@@ -18,9 +18,19 @@ enum KTalkCaptureStyle {
     static let titleColor = Color(UIColor(red: 0x1E / 255, green: 0x1E / 255, blue: 0x1E / 255, alpha: 1))
     static let descriptionColor = Color(UIColor(red: 0x73 / 255, green: 0x73 / 255, blue: 0x73 / 255, alpha: 1))
 
+    // app: the back chevron stroke in assets/icons/arrow/24-chevron-left.svg
+    static let backIconColor = Color(UIColor(red: 0x4E / 255, green: 0x4E / 255, blue: 0x4E / 255, alpha: 1))
+
     // frame values
     static let sideMargin: CGFloat = 20
+    static let navBarHeight: CGFloat = 44
+    static let backButtonWidth: CGFloat = 52
+    static let backIconSize: CGFloat = 24
+    static let backIconLineWidth: CGFloat = 2
     static let titleTopFromNavBar: CGFloat = 40
+    // Compact displays have no frame of their own; keep the title clear of the SDK oval.
+    static let compactHeight: CGFloat = 700
+    static let titleTopCompact: CGFloat = 8
     static let titleToDescription: CGFloat = 4
     static let hintToButton: CGFloat = 75
     static let buttonHeight: CGFloat = 64

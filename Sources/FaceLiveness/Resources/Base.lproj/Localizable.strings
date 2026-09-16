@@ -56,3 +56,4 @@
 "amplify_ui_liveness_challenge_description" = "Follow the on-screen instructions.";
 "amplify_ui_liveness_challenge_hint" = "Look at the camera so your face is clearly visible.";
 "amplify_ui_liveness_challenge_cancel" = "Cancel";
+"amplify_ui_liveness_challenge_a11y_back_content_description" = "Back";
